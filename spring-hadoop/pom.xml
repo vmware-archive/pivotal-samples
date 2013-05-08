@@ -58,5 +58,45 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.akrantha.springhadoop.edu.WordCount</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/assembly/uberjar.xml</descriptor>
+					</descriptors>
+					<archive>
+						<manifest>
+							<mainClass></mainClass>
+							<addClasspath>true</addClasspath>
+						</manifest>
 
+					</archive>
+				</configuration>
+
+				<executions>
+					<execution>
+
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
