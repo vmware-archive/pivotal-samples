@@ -6,7 +6,6 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 	http://www.springframework.org/schema/hadoop http://www.springframework.org/schema/hadoop/spring-hadoop.xsd">
 
-
 	<context:property-placeholder location="hadoop.properties" />
 
 	<configuration >
@@ -21,13 +20,6 @@
 		mapper="com.akrantha.springhadoop.edu.WordCount.TokenizerMapper"
 		reducer="com.akrantha.springhadoop.edu.WordCount.IntSumReducer" 
 		/>
-
-	<script id="preaction-script" location="cp-data.js">
-		<property name="inputPath" value="${wordcount.input.path}" />
-		<property name="outputPath" value="${wordcount.output.path}" />
-		<property name="localResource" value="${local.data}" />
-	</script>
-
 
 		<job-runner id="runner" run-at-startup="true" 
 			job-ref="wordcountJob" />

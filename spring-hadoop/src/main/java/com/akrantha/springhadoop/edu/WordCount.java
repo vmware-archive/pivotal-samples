@@ -12,13 +12,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class WordCount {
 
-	/**
-	 * @param args
-	 */
 	private static final String[] CONFIGS = new String[] { "applicationContext.xml" };
-
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		String[] res = (args != null && args.length > 0 ? args : CONFIGS);
 		AbstractApplicationContext ctx = new ClassPathXmlApplicationContext(res);
 		// shutdown the context along with the VM
