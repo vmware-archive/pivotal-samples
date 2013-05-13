@@ -8,20 +8,16 @@
 
 	<context:property-placeholder location="hadoop.properties" />
 
-	<configuration >
+	<configuration>
 		fs.default.name=${hd.fs}
 		mapred.job.tracker=${hd.jt}
 	</configuration>
 
-	<job id="wordcountJob" 
-		input-path="${wordcount.input.path}"
-		output-path="${wordcount.output.path}"
-		libs="${LIB_DIR}/spring-hadoop-0.0.1.jar"
+	<job id="wordcountJob" input-path="${wordcount.input.path}"
+		output-path="${wordcount.output.path}" libs="${LIB_DIR}/spring-hadoop-0.0.1.jar"
 		mapper="com.akrantha.springhadoop.edu.WordCount.TokenizerMapper"
-		reducer="com.akrantha.springhadoop.edu.WordCount.IntSumReducer" 
-		/>
+		reducer="com.akrantha.springhadoop.edu.WordCount.IntSumReducer" />
 
-		<job-runner id="runner" run-at-startup="true" 
-			job-ref="wordcountJob" />
+	<job-runner id="runner" run-at-startup="true" job-ref="wordcountJob" />
 
 </beans:beans>
