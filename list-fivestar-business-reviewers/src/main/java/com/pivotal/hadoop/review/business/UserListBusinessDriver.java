@@ -15,7 +15,7 @@ public class UserListBusinessDriver extends Configured implements Tool {
 
 	public static void main(String[] args) throws Exception {
 
-		if (args.length != 3) {
+		if (args.length < 3) {
 			System.err.println("Usage: " + "UserCountReviewBusinessDriver"
 					+ "<Business data>  <Review data> <out>");
 			System.exit(2);
