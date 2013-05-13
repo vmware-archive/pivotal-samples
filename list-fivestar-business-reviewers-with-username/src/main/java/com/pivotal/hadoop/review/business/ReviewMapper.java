@@ -38,7 +38,6 @@ public class ReviewMapper extends Mapper<LongWritable, MapWritable, Text, Text> 
 
 		URI[] files = DistributedCache
 				.getCacheFiles(context.getConfiguration());
-		System.out.println("Reading Bloom filter from: " + files[0].getPath());
 
 		userCache = FileUtils.readFile(files[0].getPath(),
 				context.getConfiguration());
