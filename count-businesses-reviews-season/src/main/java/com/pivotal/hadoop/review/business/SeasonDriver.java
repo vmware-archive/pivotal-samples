@@ -16,7 +16,7 @@ public class SeasonDriver extends Configured implements Tool {
 
 	public static void main(String[] args) throws Exception {
 
-		if (args.length != 2) {
+		if (args.length < 3) {
 			System.err.println("Usage: " + "SeasonDriver"
 					+ "<review data> <out>");
 			System.exit(2);

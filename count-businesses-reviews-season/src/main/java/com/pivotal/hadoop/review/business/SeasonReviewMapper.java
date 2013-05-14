@@ -46,7 +46,7 @@ public class SeasonReviewMapper extends
 		if (StringUtils.isNotEmpty(reviewDate.toString())) {
 
 			// date is in this format 2011-07-27
-			String tokens[] = StringUtils.split(reviewDate.toString(), "");
+			String tokens[] = StringUtils.split(reviewDate.toString(), "-");
 			String month = tokens[1];
 			writeToSeason(month, context);
 			writeToMonth(month, context);
