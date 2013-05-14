@@ -16,7 +16,7 @@ public class FiveStarReviewedBusinessDriver extends Configured implements Tool {
 
 	public static void main(String[] args) throws Exception {
 
-		if (args.length != 2) {
+		if (args.length < 3) {
 			System.err.println("Usage: " + "FiveStarReviewedBusinessDriver"
 					+ "<Business data> <out>");
 			System.exit(2);
