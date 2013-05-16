@@ -1,3 +1,4 @@
+elephant dog zebra
 elephant dog
 elephant dog
 elephant dog
@@ -8,4 +9,5 @@ elephant dog
 elephant dog
 elephant dog
 elephant dog
-elephant dog
+elephant dog zebra
+elephant dog zebra wolf cat
