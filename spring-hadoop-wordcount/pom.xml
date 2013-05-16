@@ -26,6 +26,20 @@
 					<target>1.5</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>appassembler-maven-plugin</artifactId>
+				<version>1.2.2</version>
+				<configuration>
+					<repositoryLayout>flat</repositoryLayout>
+					<programs>
+						<program>
+							<mainClass>com.pivotal.springhadoop.wordcount.WordCount</mainClass>
+							<name>wordcount</name>
+						</program>
+					</programs>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
