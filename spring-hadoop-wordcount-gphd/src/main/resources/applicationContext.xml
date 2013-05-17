@@ -15,7 +15,7 @@
 	<job id="wordcountJob" 
 		input-path="${wordcount.input.path}"
 		output-path="${wordcount.output.path}"
-		libs="${LIB_DIR}/spring-hadoop-wordcount-0.0.1.jar"
+		libs="${LIB_DIR}/spring-hadoop-wordcount-gphd-0.0.1.jar"
 		mapper="com.pivotal.springhadoop.wordcount.WordCount.TokenizerMapper"
 		reducer="com.pivotal.springhadoop.wordcount.WordCount.IntSumReducer" 
 		/>
