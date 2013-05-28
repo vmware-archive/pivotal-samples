@@ -16,39 +16,39 @@ public class BusinessCount {
     DataSource dataSource;
     JdbcTemplate template;
     
-	public BusinessCount() {
-		context = new ClassPathXmlApplicationContext("datasources-beans.xml");
-		dataSource = context.getBean("postGresDataSource", DataSource.class);
-		template = new JdbcTemplate(dataSource);
-	}
-	
-	public void executeQuery() {
-		List<RowRecord> rowRecords = template.query(
-				"select city,count(*) a from business group by city",
-				new RowMapper<RowRecord>() {
-					public RowRecord mapRow(ResultSet rs, int rowNum) throws SQLException {
-						RowRecord row = new RowRecord();
-						row.city = rs.getString("city");
-						row.count = rs.getInt("a");
-						return row;
-					}
-				});
-		System.out.println("Returned: "+ rowRecords);
-	}
-	
-	class RowRecord {
-		String city;
-		int count;
-		public String toString() {
-			String s = "{" +
-				   "city=" + city + "," +
-				   "count=" + count + 
-					"}";
-			return s;
-		}
-	}
+    public BusinessCount() {
+        context = new ClassPathXmlApplicationContext("datasources-beans.xml");
+        dataSource = context.getBean("hawqDataSource", DataSource.class);
+        template = new JdbcTemplate(dataSource);
+    }
+    
+    public void executeQuery() {
+        List<RowRecord> rowRecords = template.query(
+                "select city,count(*) a from business group by city",
+                new RowMapper<RowRecord>() {
+                    public RowRecord mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        RowRecord row = new RowRecord();
+                        row.city = rs.getString("city");
+                        row.count = rs.getInt("a");
+                        return row;
+                    }
+                });
+        System.out.println("Returned: "+ rowRecords);
+    }
+    
+    class RowRecord {
+        String city;
+        int count;
+        public String toString() {
+            String s = "{" +
+                   "city=" + city + "," +
+                   "count=" + count + 
+                    "}";
+            return s;
+        }
+    }
     public static void main( String[] args ){
-    	BusinessCount app = new BusinessCount();
-    	app.executeQuery();	
+        BusinessCount app = new BusinessCount();
+        app.executeQuery();    
     }
 }
