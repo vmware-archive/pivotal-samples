@@ -1,0 +1,15 @@
+rncjoVoEFUJGCUoC1JgnUA|8466 W Peoria Ave\nSte 6\nPeoria, AZ 85345|true|["Accountants","Professional Services","Tax Services","Financial Services"]|Peoria|3|Peoria Income Tax Service|[]|-112.241596|AZ|5.0|33.581867|business
+0FNFSzCFP_rGUoJx8W7tJg|2149 W Wood Dr\nPhoenix, AZ 85029|true|["Sporting Goods","Bikes","Shopping"]|Phoenix|5|Bike Doctor|[]|-112.105933|AZ|5.0|33.604054|business
+3f_lyB6vFK48ukH6ScvLHg|1134 N Central Ave\nPhoenix, AZ 85004|true|[]|Phoenix|4|Valley Permaculture Alliance|[]|-112.0739333|AZ|5.0|33.4605258|business
+usAsSV36QmUej8--yvN-dg|845 W Southern Ave\nPhoenix, AZ 85041|true|["Food","Grocery"]|Phoenix|5|Food City|[]|-112.0853773|AZ|3.5|33.3922099|business
+PzOqRohWw7F7YEPBz6AubA|6520 W Happy Valley Rd\nSte 101\nGlendale Az, AZ 85310|true|["Food","Bagels","Delis","Restaurants"]|Glendale Az|14|Hot Bagels & Deli|[]|-112.200264|AZ|3.5|33.712797|business
+gtQzAiy7D-dPU8WzT3jX3Q|The Americana at Brand\n869 Americana Way\nGlendale, CA 91210|true|["Women's Clothing","Fashion","Shopping"]|Glendale|6|Barney's New York Co-op|[]|-112.481632232666|CA|4.5|33.6077660588006|business
+FrBCYtCS_jydDjg1KsIgWQ|1850 W Camelback Rd\nSte 1\nPhoenix, AZ 85015|true|["Music & DVDs","Books, Mags, Music & Video","Vinyl Records","Shopping"]|Phoenix|21|Zia Record Exchange|[]|-112.0987501|AZ|3.5|33.5096582|business
+yaXAD-Mv2K2PEZobmqjIYA|3415 W Northern Ave\nPhoenix, AZ 85051|true|["Event Planning & Services","Venues & Event Spaces"]|Phoenix|4|Reflections Bingo|[]|-112.132866|AZ|5.0|33.551903|business
+o3ehs4ZEdsizbJyB9_j7uQ|6938 E 1st St\nScottsdale, AZ 85251|true|["Art Schools","Specialty Schools","Shopping","Jewelry","Accessories","Fashion","Education"]|Scottsdale|14|Jam|[]|-111.9312992|AZ|5.0|33.492195|business
+qarobAbxGSHI7ygf1f7a_Q|891 E Baseline Rd\nSuite 102\nGilbert, AZ 85233|true|["Sandwiches","Restaurants"]|Gilbert|10|Jersey Mike's Subs|[]|-111.8120071|AZ|3.5|33.3788385|business
+Dhtdds7WR_h7W1FrcdW3uA|13014 N Saguaro Blvd\nSte 101\nFountain Hills, AZ 85268|true|["Restaurants","Italian"]|Fountain Hills|8|Terra Nostra|[]|-111.715082|AZ|3.5|33.604856|business
+e5gB2kDFaodtxMTa53C29g|Scottsdale Promenade\n16455 N Scottsdale Rd\nScottsdale, AZ 85254|true|["Breakfast & Brunch","American (Traditional)","Restaurants"]|Scottsdale|60|First Watch|[]|-111.954623|AZ|3.5|33.615544|business
+3EEVGDngt4DEhoOQZIUNUw|1625 N Central Ave\nPhoenix, AZ 85004|false|["American (New)","Restaurants"]|Phoenix|26|Arcadia Farms Cafe|[]|-112.0734116|AZ|3.5|33.4673017|business
+mqQwChPNN4o4DhAzaGntIA|4140 N 7th Ave\nPhoenix, AZ 85013|true|["American (Traditional)","Restaurants"]|Phoenix|179|The Fry Bread House|[]|-112.0839659|AZ|4.0|33.4964751|business
+lvM9OzZaZWo1gC8Mwcthjw|710 W Elliot Rd\nSte 101\nTempe, AZ 85284|true|["Bakeries","Food","Caterers","Event Planning & Services","Restaurants","Sandwiches"]|Tempe|31|Donna's Bakery Cafe|[]|-111.947591|AZ|4.0|33.349676|business
