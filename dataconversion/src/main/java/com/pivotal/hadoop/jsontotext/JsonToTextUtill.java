@@ -10,22 +10,16 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-/**
- * The program converts the JSON file to a flat text, with a '|' as the field
- * separator. Each row will be separated by a new line. The program assumes that
- * each object is one row of JSON.
- * The program supports one level of JSON structure. Multi-level json will be treated as a string
- * 
- */
 public class JsonToTextUtill {
 
-	static String[] user = { "votes", "user_id", "name", "review_count", "type" };
+	static String[] user = { "votes", "user_id", "name", "average_stars",
+		"review_count","type"};
 	static String[] business = { "business_id", "full_address", "open",
-			"categories", "city", "review_count", "name", "neighborhoods",
-			"longitude", "state", "stars", "latitude", "type" };
+		"categories", "city", "review_count", "name", "neighborhoods",
+		"longitude", "state", "stars", "latitude" ,"type"};
 
-	static String[] review = { "business_id", "user_id", "stars", "text",
-			"date", "votes" };
+	static String[] review = { "votes", "user_id", "review_id", "stars",
+			"date","text", "type", "business_id" };
 
 	public static void main(String[] args) throws IOException, ParseException {
 
@@ -41,6 +35,7 @@ public class JsonToTextUtill {
 		} else if (!(isJsonFile(args[1]))) {
 			System.out.println("Please enter json file ");
 		} else {
+
 			String table = args[0];
 			String filePath = args[1];
 			String output = args[2];
@@ -64,18 +59,22 @@ public class JsonToTextUtill {
 		File fileOut = new File(output);
 
 		try {
+
 			sc = new Scanner(inputFile, "utf-8");
+			String line;
 			fw = new FileWriter(fileOut.getAbsoluteFile());
 			bw = new BufferedWriter(fw);
-			sc.useDelimiter("}" + System.getProperty("line.separator"));
 
+			sc.useDelimiter("}" + System.getProperty("line.separator"));
 			while (sc.hasNextLine()) {
-				String line = sc.nextLine();
+				line = sc.nextLine();
 				if (line != null || !(line.isEmpty())) {
 					JSONObject jsonObj;
 					jsonObj = (JSONObject) jsonParser.parse(line);
 					String formatRow = formatRow(field, jsonObj);
+
 					bw.write(formatRow);
+
 				}
 			}
 
@@ -96,23 +95,38 @@ public class JsonToTextUtill {
 		for (String column : field) {
 			count++;
 			String temp = jsonObj.get(column).toString();
+
 			if (column.contentEquals("text")
 					|| column.contentEquals("full_address")) {
 
 				String col = temp.replace("\n", "\\n");
+
 				temp = col;
 			}
-			if (column.contentEquals("name")) {
-				String cols = "";
-				if (temp.contains("|")) {
-					cols = temp.replace("|", "\\");
+
+			if (column.contentEquals("name") || column.contentEquals("text")) {
+
+				String emt = ":" + "\\";
+				if (temp.contains(emt)) {
+					String cols = "";
+
+					cols = temp.replace(emt, ".");
+
+					temp = cols;
 				}
-				temp = cols;
+				if (temp.contains("|")) {
+					String cols = "";
+					cols = temp.replace("|", ".");
+					temp = cols;
+				}
+
 			}
+
 			row.append(temp);
 			if (count < field.length) {
 				row.append("|");
 			}
+
 		}
 		row.append(System.getProperty("line.separator"));
 		return row.toString();
