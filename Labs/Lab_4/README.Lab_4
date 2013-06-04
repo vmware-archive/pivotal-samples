@@ -1,0 +1,16 @@
+Lab 4: GPXF External Tables I -- predicate push-down
+
+(a) Review the DDL run in 1.(a)
+    - symlinked to this directory
+
+(b) Run query involving HBase table ("customers_dim" table)
+
+(c) Check the value of the GUC "gpxf_enable_filter_pushdown" (using "show")
+
+(d) Toggle that to "off"
+
+(e) Rerun the query
+
+(f) What's the ratio of the runtime of the query in (e) to the query in (b)?
+
+

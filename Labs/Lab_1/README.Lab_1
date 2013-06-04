@@ -1,0 +1,45 @@
+Lab 1: HAWQ create tables exercise
+
+(a) Review the DDL SQL script for all the tables for the labs:
+
+    vi (or 'less', 'more', ...) retail_demo_GPXF.sql
+
+(b) Use the "psql" HAWQ client to run the DDL SQL script:
+    
+    psql -f retail_demo_GPXF.sql
+
+(c) Once complete, you should be able to log in with psql and observe the result:
+
+[gpadmin@pivhdsne Lab_1]$ psql
+Timing is on.
+psql (8.2.15)
+Type "help" for help.
+
+demo=# \dt retail_demo.*
+                         List of relations
+   Schema    |         Name         | Type  |  Owner  |   Storage   
+-------------+----------------------+-------+---------+-------------
+ retail_demo | categories_dim       | table | gpadmin | append only
+ retail_demo | date_dim             | table | gpadmin | append only
+ retail_demo | order_lineitems_hawq | table | gpadmin | append only
+ retail_demo | orders_hawq          | table | gpadmin | append only
+ retail_demo | payment_methods      | table | gpadmin | append only
+(5 rows)
+
+demo=# \dx retail_demo.*
+                         List of relations
+   Schema    |          Name          | Type  |  Owner  | Storage  
+-------------+------------------------+-------+---------+----------
+ retail_demo | customer_addresses_dim | table | gpadmin | external
+ retail_demo | customers_dim          | table | gpadmin | external
+ retail_demo | email_addresses_dim    | table | gpadmin | external
+ retail_demo | order_lineitems        | table | gpadmin | external
+ retail_demo | orders                 | table | gpadmin | external
+ retail_demo | products_dim           | table | gpadmin | external
+(6 rows)
+
+We created the following object types:
+  o Schema
+  o HAWQ Append-Only (AO) tables
+  o GPXF external tables against compressed TAB-separated value data in HDFS
+

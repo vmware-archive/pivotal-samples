@@ -1,0 +1,42 @@
+Lab 2: Loading data into HDFS
+
+(a) Load the *.tsv.gz data files into HDFS
+    - Review the load script: load_data_to_HDFS.sh
+    - Run this load script: ./load_data_to_HDFS.sh
+
+(b) Verify that you get the expected result:
+
+    hdfs fsck /retail_demo -files
+
+    Did the output confirm the presence of the *.gz files within HDFS?
+      
+
+(b) Verify one of the tables previously created is able to query this data
+
+    - Run an SQL query using psql, or just ./verify_data_load.sh
+
+    Did it work?
+
+(c) Why the need for the "customers_dim" directory -- it seems redundant?  That
+    will help, later, when we define the Hive external tables and also when
+    we run out HBase build import, as both of these operations work with
+    directory paths as opposed to files.
+
+Note on why we're using gzip compression, even though it's not splittable
+in HDFS: gzip seems to have about a 4x speedup vs. bzip2 for reads.
+
+[mac:retail_demo_export]$ time zcat orders.tsv.gz | wc -l
+  512071
+
+  real  0m3.179s
+  user  0m2.436s
+  sys 0m0.152s
+[mac:retail_demo_export]$ gunzip orders.tsv.gz 
+[mac:retail_demo_export]$ bzip2 orders.tsv 
+[mac:retail_demo_export]$ time bzcat orders.tsv.bz2 | wc -l
+  512071
+
+  real  0m14.419s
+  user  0m13.593s
+  sys 0m0.283s
+

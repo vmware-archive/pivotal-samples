@@ -1,0 +1,172 @@
+Lab 5: ETL and Data Loading Using Hadoop Streaming API
+
+PART 1: FIXING SMALL FILES
+
+1. Generate random denormalized retail data
+
+$ python generate_receipts.py 100000 120
+
+This generates 100000 random receipts over 120 different files
+
+2. Take a look at the data that was generated (this is the data we want to load into hdfs)
+
+$ ls -lah data/
+
+Note that there are a ton of tiny gzip files
+
+3. Take a look at one of the files to see the format:
+
+$ cat data/data75082to76517.gz | gunzip | head -n20
+
+This shows you the first 20 lines of one of the files.
+Take note of what things we aren't happy about with the format. We'll fix those things in Part 2.
+
+4. Before we start blobbing these things together, we need to do some math to
+figure out how many records we should shoot for in a file. Assume that the
+block size we want is 640K (unrealistic for sake of exercise, default block
+size is 64MB)
+
+Figure out what the average record size is:
+   step 1: take a file, and count the lines: 
+     $ cat data/data16063to18117.gz | gunzip | wc -l
+     2056
+   step 2: figure out the size of that file, gzipped:
+     $ ls -lah data/data16063to18117.gz 
+     -rw-rw-r-- 1 gpadmin gpadmin 89K Apr 23 13:23 data/data16063to18117.gz
+   step 3: divide step 1 by step 2 to get the average size per record
+     89K / 2056 records  = .043 K/record
+   step 4: figure out how many records in a block:
+     640K per block / .043 K per record = 14884 records per block
+     but let's round down because we don't want to go over, so let's say 13000 records
+
+5. Now, let's blob files together into 13000 record chunks, then gzip them:
+
+   $ mkdir data2
+   $ cd data2
+   $ cat ../data/*gz | gunzip | split -l13000 - DATA_   (this cats a bunch of files, then splits them into chunks)
+   $ ls DATA* | xargs gzip
+
+Check out what we ended up with:
+   $ ls -lah
+
+
+PART 2: LOADING INTO HDFS
+
+1. Create a directory for the data:
+
+   $ hadoop fs -mkdir /dataload_exercise
+
+2. Put the data into hadoop:
+
+   $ hadoop fs -put DATA_*gz /dataload_exercise
+This command follows similar syntax to "mv" but it's going from a local file to a hdfs file
+
+3. Check out if the data actually made it and check the size of the directory:
+
+   $ hadoop fs -ls /dataload_exercise
+   $ hadoop fs -du -s -h /dataload_exercise
+
+4. Let's check out one of the files to make sure it actually got there correctly:
+
+   $ hadoop fs -cat /dataload_exercise/DATA_aa.gz | gunzip | head
+
+5. Take a look at some of the other commands to your disposal:
+
+   $ hadoop fs
+
+PART 3: PREPARING DATA FOR HAWQ WITH HADOOP STREAMING
+
+In order to prepare the data for loading into HAWQ, we have to fix the following problems with the data:
+  - there are column headers still left over from the original files
+  - the gift card column has 'n/a' in it instead of 0
+  - the gift card column, when it does has a number, has a '$' in front of the number
+  - the length of the colums is variable based on the number of items
+
+To fix this, we'll have to fix the few minor problems and then normalize the receipt into line items.
+
+To do this, we'll use hadoop streaming. Hadoop streaming takes a program that
+uses standard in and standard out as the mapper or reducer to the mapreduce
+job.
+
+1. Write a script in the language of your choice (perl, bash, etc.) to convert
+the data to look something like this:
+
+121857	10016486	103	11780	60.13	2
+121857	10016486	103	17638	4.73	1
+121857	10016486	103	20105	49.51	2
+121857	10016486	103	23080	18.39	1
+121857	10016486	103	28557	11.21	3
+121857	10016486	103	7475	32.97	3
+121857	10016486	103	8051	16.79	2
+121857	10016486	103	9410	58.16	4
+127166	10016487	0	1342	52.02	1
+127166	10016487	0	13785	23.28	1
+127166	10016487	0	20138	72.9	3
+127166	10016487	0	22009	48.49	4
+127166	10016487	0	24348	35.13	3
+127166	10016487	0	383	21.88	4
+127166	10016487	0	4123	63.29	3
+127166	10016487	0	9230	85.52	2
+126258	10016488	0	8846	51.56	2
+110012	10016489	0	3622	87.65	1
+
+You can test your script by just passing the data through standard in:
+   $ cat data2/DATA_aa.gz | gunzip | python normalize.py
+
+2. Use Hadoop Streaming to parse all the data in the /dataload_exercise directory
+
+   $ hadoop jar \
+       /usr/lib/gphd/hadoop-mapreduce-2.0.2_alpha_gphd_2_0_1_0/hadoop-streaming-2.0.2-alpha-gphd-2.0.1.0-SNAPSHOT.jar \
+       -D mapred.reduce.tasks=0 \
+       -input '/dataload_exercise/*gz' \
+       -file normalize.py \
+       -mapper "python normalize.py" \
+       -output /dataload_exercise_out
+
+Don't worry about the WARNings (yet). They are deprecated and the streaming
+code hasn't been updated.
+
+Note, we set the number of reducers to 0 since this is a transformation job
+only. There is no aggregation. This makes it so the mappers write directly
+out.
+
+3. Check out the output of the job
+
+   $ hadoop fs -ls /dataload_exercise_out
+
+PART 4: LOAD DATA PERMANENTLY INTO HAWQ
+
+1. Create an XF table in HAWQ that points at the output data we just created in HDFS
+
+   $ psql
+
+CREATE EXTERNAL TABLE xf_dataload_lineitems
+(
+  customer_id bigint,
+  order_id    bigint,
+  giftcard    integer,
+  item_id     bigint,
+  price_per   money,
+  amount      integer
+)
+LOCATION ('gpxf://localhost:50070/dataload_exercise_out?FRAGMENTER=HdfsDataFragmenter')
+FORMAT 'TEXT' (DELIMITER = E'\t'); -- NOTE: \t is the default delimiter
+
+2. Materialize the data as a HAWQ table:
+
+   > CREATE TABLE dataload_lineitems AS SELECT * FROM xf_dataload_lineitems;
+
+3. Play around with the table:
+
+   > SELECT customer_id, SUM(amount) AS s FROM dataload_lineitems GROUP BY customer_id ORDER BY s DESC LIMIT 10; 
+
+This SQL query looks up the total number of individual items purchased by each
+customer, and then just grabs the top 10.
+
+PART 5: Clean up (if you want)
+Ensure you don't have anything you want to save within either of the /data or /data2
+directories.  Run this script to clean this back up to its initial state:
+
+  ./cleanup.sh
+
+

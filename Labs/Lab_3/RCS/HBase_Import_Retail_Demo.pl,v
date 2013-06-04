@@ -1,0 +1,281 @@
+head	1.7;
+access;
+symbols;
+locks
+	gpadmin:1.7; strict;
+comment	@# @;
+
+
+1.7
+date	2013.04.23.13.27.49;	author gpadmin;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2013.04.23.12.59.58;	author gpadmin;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2013.04.23.12.45.24;	author gpadmin;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2013.04.23.10.12.47;	author gpadmin;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2013.04.23.10.09.42;	author gpadmin;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2013.04.23.10.01.16;	author gpadmin;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2013.04.23.09.50.18;	author gpadmin;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.7
+log
+@*** empty log message ***
+@
+text
+@#!/usr/bin/env perl
+
+# $Id: HBase_Import_Retail_Demo.pl,v 1.6 2013/04/23 12:59:58 gpadmin Exp gpadmin $
+#
+# Takes ~ 10 minutes to run
+#
+
+use strict;
+
+#
+# To get past the issue:
+#
+# java.lang.NoClassDefFoundError: com/google/common/base/Function,
+#
+# I had to add one JAR to HADOOP_CLASSPATH in hadoop-env.sh:
+#   $HBASE_ROOT/lib/guava-r06.jar (Value of `LIB_JARS', below)
+#
+# If, after starting this script, you see an errror like this:
+#   12/08/21 06:43:46 INFO ipc.Client: Retrying connect to server: 0.0.0.0/0.0.0.0:8021.
+#    Already tried 0 time(s).
+#
+# you need to run start-mapred.sh (the JobTracker hasn't been started).
+#
+# You can confirm JobTracker is running by using the command `jps'.
+#
+
+my $HBASE_ROOT = "/usr/lib/gphd/hbase";
+my $HBASE_JAR = "$HBASE_ROOT/hbase-0.94.2-gphd-2.0.1.0-SNAPSHOT.jar";
+my $LIB_JARS = "$HBASE_ROOT/lib/guava-11.0.2.jar";
+my $DATA_DIR = "/retail_demo";
+
+my %table_to_col = (
+  # ROWKEY: customer_address_id
+  # Import took 6:54
+  customer_addresses_dim => [qw(
+    customer_id
+    valid_from_timestamp
+    valid_to_timestamp
+    house_number
+    street_name
+    appt_suite_no
+    city
+    state_code
+    zip_code
+    zip_plus_four
+    country
+    phone_number
+  )],
+  # ROWKEY: customer_id
+  customers_dim => [qw(
+    first_name
+    last_name
+    gender
+  )],
+  # ROWKEY: customer_id
+  email_addresses_dim => [qw(
+    email_address
+  )],
+  # ROWKEY: product_id
+  products_dim => [qw(
+    category_id
+    price
+    product_name
+  )],
+);
+
+foreach my $table (keys %table_to_col)
+{
+  #next unless $table eq "customer_addresses_dim"; ### FIXME
+  create_hbase_table($table);
+  import_to_hbase($table);
+}
+# NOTE -> you can drop an HBase table like this:
+# echo "disable 'stock_trades'; drop 'stock_trades'" | hbase shell
+
+sub create_hbase_table {
+  my $t_name = shift;
+  print "Creating HBase table '$t_name' ...\n";
+  open HBASE, "| hbase shell" or die $!;
+  print HBASE "create '$t_name', 'cf1'\n";
+  close HBASE;
+}
+
+sub import_to_hbase {
+  my $t_name = shift;
+  print "Running the 'importtsv' map/reduce job to load '$t_name' into HBase ...";
+  my $cols = join(",", map { "cf1:$_" } @@{$table_to_col{$t_name}});
+  my $cmd = "hadoop jar $HBASE_JAR importtsv -libjars $LIB_JARS";
+  #$cmd .= " -Dimporttsv.columns=HBASE_ROW_KEY,cf1:ticker,cf1:volume,cf1:price,cf1:ts_ms";
+  $cmd .= " -Dimporttsv.columns=HBASE_ROW_KEY,$cols";
+  $cmd .= " $t_name $DATA_DIR/$t_name";
+  #print "cmd: \"$cmd\"\n";
+  system $cmd;
+}
+
+@
+
+
+1.6
+log
+@*** empty log message ***
+@
+text
+@d3 4
+a6 1
+# $Id: HBase_Import_Retail_Demo.pl,v 1.5 2013/04/23 12:45:24 gpadmin Exp gpadmin $
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d3 1
+a3 1
+# $Id: HBase_Import_Retail_Demo.pl,v 1.4 2013/04/23 10:12:47 gpadmin Exp gpadmin $
+d31 1
+d66 1
+a66 1
+  next unless $table eq "customer_addresses_dim"; ### FIXME
+d90 1
+a90 1
+  system "time $cmd";
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d3 1
+a3 1
+# $Id: HBase_Import_Retail_Demo.pl,v 1.3 2013/04/23 10:09:42 gpadmin Exp gpadmin $
+d30 1
+d32 12
+a43 2
+    customer_address_id customer_id valid_from_timestamp valid_to_timestamp house_number
+    street_name appt_suite_no city state_code zip_code zip_plus_four country phone_number
+d45 1
+d47 3
+a49 1
+    customer_id first_name last_name gender
+d51 1
+d53 1
+a53 1
+    customer_id integer email_address
+d55 1
+d57 3
+a59 1
+    product_id category_id price product_name
+d65 1
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d3 1
+a3 1
+# $Id: HBase_Import_Retail_Demo.pl,v 1.2 2013/04/23 10:01:16 gpadmin Exp gpadmin $
+d69 2
+a70 1
+  print "cmd: \"$cmd\"\n";
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d3 1
+a3 1
+# $Id: HBase_Import_Retail_Demo.pl,v 1.1 2013/04/23 09:50:18 gpadmin Exp gpadmin $
+d30 1
+a30 1
+  customer_addresses_dim => qw(
+d33 2
+a34 2
+  ),
+  customers_dim => qw(
+d36 2
+a37 2
+  ),
+  email_addresses_dim => qw(
+d39 2
+a40 2
+  ),
+  products_dim => qw(
+d42 1
+a42 1
+  ),
+d64 1
+a64 1
+  my $cols = join(",", map { "cf1:" . $_ } @@{$table_to_col{$t_name}});
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d3 1
+a3 1
+# $Id$
+d43 1
+a43 1
+)
+d48 1
+d53 8
+d63 1
+a63 1
+  print "Running the 'importtsv' map/reduce job to load '$t_name' into HBase ..."
+a71 8
+sub create_hbase_table {
+  my $t_name = shift;
+  print "Creating HBase table '$t_name' ...\n";
+  open HBASE, "| hbase shell" or die $!;
+  print HBASE "create '$t_name', 'cf1'";
+  close HBASE;
+}
+
+@

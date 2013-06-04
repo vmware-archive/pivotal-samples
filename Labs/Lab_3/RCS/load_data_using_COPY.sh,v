@@ -1,0 +1,40 @@
+head	1.1;
+access;
+symbols;
+locks
+	gpadmin:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2013.05.04.10.50.14;	author gpadmin;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@#!/bin/bash
+
+# Load the three small .tsv.gz files using COPY, on HAWQ master
+# The files are TAB delimited, where NULL is just the empty string, ''
+
+# $Id$
+
+schema=retail_demo
+
+for table in `ls *.gz  | perl -ne 's/^(\w+).+$/$1/;print;'`
+do
+  file="$table.tsv.gz"
+  zcat $file | psql -c "COPY $schema.$table FROM STDIN DELIMITER E'\t' NULL E'';"
+done
+
+
+@

@@ -1,0 +1,69 @@
+Lab 7: Hive DDL and query comparison
+
+(a) Run the Hive DDL to create Hive external tables against data from 2.(a)
+    - Here's the Hive DDL for Hive external tables: "hive_create_retail_tables.sql"
+    - Run this DDL to create the tables: hive -f hive_create_retail_tables.sql
+
+(b) Use the Hive shell to examine the result of (a):
+
+[gpadmin@pivhdsne Lab_7]$ hive
+hive> use retail_demo;
+OK
+Time taken: 6.152 seconds
+
+hive> show tables;
+OK
+categories_dim
+customer_addresses_dim
+customers_dim
+date_dim
+email_addresses_dim
+order_lineitems
+orders
+payment_methods
+products_dim
+Time taken: 1.41 seconds
+
+hive> describe order_lineitems;
+OK
+order_id  string  
+order_item_id bigint  
+product_id  int 
+product_name  string  
+customer_id int 
+store_id  int 
+item_shipment_status_code string  
+order_datetime  timestamp 
+ship_datetime timestamp 
+item_return_datetime  timestamp 
+item_refund_datetime  timestamp 
+product_category_id int 
+product_category_name string  
+payment_method_code string  
+tax_amount  double  
+item_quantity int 
+item_price  double  
+discount_amount double  
+coupon_code string  
+coupon_amount double  
+ship_address_line1  string  
+ship_address_line2  string  
+ship_address_line3  string  
+ship_address_city string  
+ship_address_state  string  
+ship_address_postal_code  string  
+ship_address_country  string  
+ship_phone_number string  
+ship_customer_name  string  
+ship_customer_email_address string  
+ordering_session_id string  
+website_url string  
+Time taken: 0.61 seconds
+hive> 
+
+(b) Run some queries against HAWQ and Hive versions of these tables
+  - Queries.sql: this file contains a set of queries which work in HAWQ/GPXF.  Several of these
+    contain window functions, which Hive isn't capable of.
+  - Please take some time to review Queries.sql since it shows off some of our features vs. Hive.
+
+

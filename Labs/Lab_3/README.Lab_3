@@ -1,0 +1,110 @@
+Lab 3: Data Loading
+
+(a) Create tables referring to the HBase tables we'll create and populate in step (b)
+
+    - Review the file "retail_demo_HBase.sql".  Notice we're creating not only the
+      external, GPXF, tables to the HBase tables, but we're also creating views so
+      these can be accessed using the expected column names, avoiding the need to
+      use the "cf1:column_name" type syntax.  Also, the views do some casting for
+      us, overcoming some type limitations present in the current version of our
+      GPXF (Jira issue "GPSQL-337").
+    - Run that DDL: psql -f retail_demo_HBase.sql
+    - Note that GPXF offers "Indirect Mapping" to overcome the "cf1:column_name"
+      issue but, depending on the types used in the table, you might still need to
+      do the casting.  The file "GPXF_Indirect_Mapping.txt" in this directory illustrates
+      how you can use this feature.
+    - Verify the views, using psql:
+
+[gpadmin@pivhdsne ~]$ psql
+Timing is on.
+psql (8.2.15)
+Type "help" for help.
+
+demo=# \dv retail_demo.*
+                        List of relations
+   Schema    |          Name          | Type |  Owner  | Storage 
+-------------+------------------------+------+---------+---------
+ retail_demo | customer_addresses_dim | view | gpadmin | none
+ retail_demo | customers_dim          | view | gpadmin | none
+ retail_demo | email_addresses_dim    | view | gpadmin | none
+ retail_demo | products_dim           | view | gpadmin | none
+(4 rows)
+
+(b) Bulk load dimension tables into HBase using "importtsv" (data is already in HDFS)
+
+    - Review that script
+    - Run it: ./HBase_Import_Retail_Demo.pl
+    - Reference on the import process: http://hbase.apache.org/book/ops_mgt.html#importtsv
+    - Verify we can see some data:
+      * Fire up the HBase shell: hbase shell
+      * Scan some rows: hbase(main):003:0> scan 'products_dim', { LIMIT => 5 }
+      * Choose one of the given rowkey values to use in a SQL query: 1000005
+      * Start psql to run a query: psql
+      * Try a query:
+
+demo=# select * from retail_demo.products_dim where product_id = 1000005;
+ product_id | category_id | price |             product_name              
+------------+-------------+-------+---------------------------------------
+    1000005 |          52 |  2.74 | Robocop - Prime Directives - Meltdown
+    (1 row)
+
+      * Now, update that row in HBase:
+      hbase(main):006:0> put 'products_dim', '1000005', 'cf1:product_name', 'London Pubs: An Illustrated Guide'
+      0 row(s) in 0.0470 seconds
+
+      * Finally, re-run that SQL query:
+
+demo=# select * from retail_demo.products_dim where product_id = 1000005;
+ product_id | category_id | price |           product_name            
+ ------------+-------------+-------+-----------------------------------
+     1000005 |          52 |  2.74 | London Pubs: An Illustrated Guide
+     (1 row)
+
+      * The combination of HBase and GPXF adds the otherwise missing UPDATE capability
+        to our Pivotal HD stack.
+
+(c) Load data into HAWQ using COPY (data is in DAS, on master node).  COPY runs on
+    the HAWQ master node, against data in a file on piped into it.  Since it runs
+    only on one host, it lacks parellelism and is best for small tables.
+
+    - Review the load script, "load_data_using_COPY.sh", which will load three
+      small HAWQ append-only (AO) tables
+    - Run the load script: ./load_data_using_COPY.sh
+
+(d) Load a HAWQ AO table using a SELECT from one of the GPXF tables already defined
+    in 1.(a) and "loaded" in 2.(a).  This illustrates one way of moving data from 
+    HDFS into native HAWQ tables in parallel, as each of the HAWQ segments is able
+    to independently communicate with a DataNode; this approach scales well.
+
+    - Review the script, "order_lineitems_HAWQ_AO_with_load.sql".  Notice that the
+      "::" operator is used to cast certain data types to others, as well as the
+      use of the CASE statement to deal with the need to convert an empty string
+      to a NULL.
+    - Run the load process: psql -f order_lineitems_HAWQ_AO_with_load.sql
+    - Finally, analyze the table to update the statistics for the query
+      planner: psql -f analyze_AO_table.sql
+
+(e) Now that this table is loaded, we can look for it in HDFS:
+
+  * First, find the OID for the table:
+
+demo=# select oid, relname from pg_class where relname = 'order_lineitems_ao';
+  oid  |      relname       
+-------+--------------------
+ 25517 | order_lineitems_ao
+(1 row)
+
+Time: 1.540 ms
+
+  * Now, look for the corresponding data file within HDFS:
+
+[gpadmin@pivhdsne ~]$ hadoop fs -ls -R /hawq_data/gpseg0/ | grep 25517
+-rw-------   3 hdfs hadoop          0 2013-05-07 10:07 /hawq_data/gpseg0/16385/16389/25517
+-rw-------   3 hdfs hadoop  246199264 2013-05-07 10:08 /hawq_data/gpseg0/16385/16389/25517.1
+
+  * How large was the original gzipped data file corresponding to this AO table in HAWQ?
+
+[gpadmin@pivhdsne Lab_3]$ ls -l ../Lab_2/order_lineitems.tsv.gz 
+-rw------- 1 gpadmin gpadmin 137780165 Apr 25 11:00 ../Lab_2/order_lineitems.tsv.gz
+
+

@@ -1,0 +1,34 @@
+Table of contents for labs
+
+Lab 1: HAWQ create tables exercise
+  (a) Run the DDL SQL script for all the tables for the labs
+
+Lab 2: Loading data into HDFS
+  Use Hadoop command line utility to copy data files to HDFS
+
+Lab 3: Data Loading: HBase, HAWQ
+  (a) Load dimension table(s) into HBase using "importtsv" (data is in HDFS)
+  (b) Load data into HAWQ using COPY (data is in DAS)
+  (c) Load a HAWQ AO table using a SELECT from one of the GPXF tables defined
+      in 2.(a) and "loaded" in 3.(a)
+
+Lab 4: GPXF External Tables I -- predicate push-down
+  (a) Review the DDL run in 1.(a)
+  (b) Run query involving HBase table ("customers_dim" table)
+  (c) Check the value of the GUC "gpxf_enable_filter_pushdown" (using "show")
+  (d) Toggle that to "off"
+  (e) Rerun the query
+
+Lab 5: Map/Reduce job for ETL
+  Use Hadoop's Streaming API to transform data in HDFS
+
+Lab 6: GPXF External Tables II -- table statistics
+  (a) SELECT relpages, reltuples FROM pg_class WHERE relname = 'table_name';
+  (b) ANALYZE table_name;
+  (c) SELECT relpages, reltuples FROM pg_class WHERE relname = 'table_name';
+
+Lab 7: Hive DDL and query comparison
+  (a) Run the Hive DDL to create Hive external tables against existing HDFS data
+  (b) Run some queries against HAWQ and Hive versions of these tables
+
+

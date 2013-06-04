@@ -1,0 +1,53 @@
+GPXF: Indirect Column Mapping
+24 April 2012
+
+This makes it possible to use "normal" column names within your SQL, as opposed to the odd-
+looking "qualifier:column_name" syntax.
+
+Here's a concrete example:
+
+We have an HBase table, "stock_trades", with column family "cf1" and columns: ticker,
+volume, price, ts_ms.
+
+We want to create a HAWQ/GPXF table using these simple column names, like this:
+
+DROP EXTERNAL TABLE IF EXISTS stock_trades_mapped;
+CREATE EXTERNAL TABLE stock_trades_mapped
+(
+  recordkey text,
+  ticker text,
+  volume integer,
+  price float8,
+  ts_ms bigint
+)
+LOCATION ('gpxf://pivhdsne:50070/stock_trades?FRAGMENTER=HBaseDataFragmenter')
+FORMAT 'CUSTOM' (FORMATTER='gpxfwritable_import');
+
+In order to do this, we must first set up this "indirect mapping" for GPXF, as follows:
+
+Start HBase shell: hbase shell
+
+hbase(main):011:0> create 'gpxflookup', 'mapping'
+
+hbase(main):006:0> put 'gpxflookup', 'stock_trades', 'mapping:ticker', 'cf1:ticker'
+0 row(s) in 0.0250 seconds
+
+hbase(main):007:0> put 'gpxflookup', 'stock_trades', 'mapping:volume', 'cf1:volume'
+0 row(s) in 0.0130 seconds
+
+hbase(main):008:0> put 'gpxflookup', 'stock_trades', 'mapping:price', 'cf1:price'
+0 row(s) in 0.0120 seconds
+
+hbase(main):009:0> put 'gpxflookup', 'stock_trades', 'mapping:ts_ms', 'cf1:ts_ms'
+0 row(s) in 0.0060 seconds
+
+hbase(main):010:0> scan 'gpxflookup'
+ROW                                COLUMN+CELL                                                                                      
+ stock_trades                      column=mapping:price, timestamp=1366832361384, value=cf1:price                                   
+ stock_trades                      column=mapping:ticker, timestamp=1366832327058, value=cf1:ticker                                 
+ stock_trades                      column=mapping:ts_ms, timestamp=1366832375219, value=cf1:ts_ms                                   
+ stock_trades                      column=mapping:volume, timestamp=1366832347145, value=cf1:volume                                 
+1 row(s) in 0.0580 seconds
+
+Obviously, for more complex tables, this will become pretty tedious, so maybe we can automate
+this procedure.  This is left as an exercise for the reader ...

@@ -1,0 +1,51 @@
+Lab 6: Illustrate Statistics on External Tables
+
+Step 1: Create a dummy text file for the exercise (containing 1.0E+07 rows)
+-------------------------------------------------
+seq 1 10000000 > /tmp/demo.txt
+
+Step 2: Load this text file into hdfs
+-------------------------------------
+[shell_prompt]$ hadoop fs -put /tmp/demo.txt /
+
+Step 3: Create gpxf external table to point to this text file (edit the namenode info accordingly)
+-------------------------------------------------------------------------------
+gpadmin# drop external table demo;
+gpadmin# CREATE EXTERNAL TABLE demo (val INT)
+LOCATION ('gpxf://pivhdsne:50070/tmp/demo.txt?FRAGMENTER=HdfsDataFragmenter&Analyzer=HdfsAnalyzer') FORMAT 'TEXT' (DELIMITER = '|');
+
+Step 4: Look at the stats prior to analyze (default stats before collecting stats)
+-------------------------------------------------------------------------------
+gpadmin=# select relpages,reltuples from pg_class where relname='demo';
+ relpages | reltuples 
+ ----------+-----------
+      1000 |     1e+06
+(1 row)
+
+Step 5: Run analyze on the gpxf table to gather statistics
+----------------------------------------------------------
+gpadmin=# analyze demo;
+ANALYZE
+
+Step 6: Look at the stats after running analyze
+-----------------------------------------------
+gpadmin=# select relpages,reltuples from pg_class where relname='demo';
+ relpages | reltuples 
+ ----------+-----------
+      4096 |     1e+07
+(1 row)
+
+Step 7: Drop this external table
+-----------------------------------------------
+gpadmin# drop external table demo;
+
+
+Notes: 
+======
+By default, gpxf assumes that there are 1 million rows in the data source. By
+analyzing the table, we are giving the hawq engine better statistics about
+source data which will help the optimizer to come with optimal query execution
+plans (decisions related to redistribute vs broadcast, hash agg vs group agg,
+merge join vs hash join vs nested loop etc.).
+
+
