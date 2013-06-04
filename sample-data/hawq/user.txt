@@ -1,9 +1,0 @@
-{"cool":0,"funny":0,"useful":1}|HK35ai8frY75iMYBVdD_Pg|Bryant|5.0|1|user
-{"cool":0,"funny":0,"useful":0}|_MucjBvznq2y3yDEt9rOHA|Cindy|5.0|1|user
-{"cool":113,"funny":93,"useful":226}|szbTVEtATfn8f9GxbGGO5w|Tracy|3.61|159|user
-{"cool":24,"funny":12,"useful":35}|TNUX-baP2gvFDajjErgsFw|Christina|3.97|29|user
-{"cool":34,"funny":16,"useful":78}|OESKxoNFZcKl47NrOubgAQ|Scott|4.56|77|user
-{"cool":6,"funny":13,"useful":25}|L3-csFTxPRnG9eVIYoVoGA|Chris|3.0|21|user
-{"cool":90,"funny":62,"useful":219}|ZC49A1K-if7KP8VJXoqELQ|Tina|4.11|156|user
-{"cool":2,"funny":0,"useful":3}|wEn3lI8-9k5I5Z7633Nqcg|Leigh Anne|4.0|6|user
-{"cool":0,"funny":1,"useful":10}|YlPD4-i3h6nQtokm3WmrFg|Yuson|2.29|7|user
