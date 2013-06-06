@@ -80,6 +80,7 @@ sub import_to_hbase {
   my $cmd = "hadoop jar $HBASE_JAR importtsv -libjars $LIB_JARS";
   $cmd .= " -Dimporttsv.columns=HBASE_ROW_KEY,$cols";
   $cmd .= " $t_name $DATA_DIR/$t_name";
+  print $cmd
   system $cmd;
 }
 
