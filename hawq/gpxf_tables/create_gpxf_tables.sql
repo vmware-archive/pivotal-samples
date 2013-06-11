@@ -152,4 +152,3 @@ LOCATION ('gpxf://pivhdsne:50070/retail_demo/products_dim/products_dim.tsv.gz?Fr
 FORMAT 'TEXT' (DELIMITER = E'\t');
 
 
-
