@@ -20,7 +20,7 @@ public class PostalCodesMapper extends
 		String total_paid_amount = tokens[9];
 		String billing_address_postal_code = tokens[24];
 		key.set(Integer.parseInt(billing_address_postal_code));
-		val.set("t:" + total_tax_amount + "," + "p:" + total_paid_amount);
+		val.set(total_tax_amount + "," +total_paid_amount);
 		context.write(key, val);
 
 	}

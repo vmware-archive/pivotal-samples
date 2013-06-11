@@ -1,3 +1,4 @@
+DROP SCHEMA IF EXISTS retail_demo CASCADE;
 CREATE SCHEMA retail_demo;
 
 -- 1. HAWQ table; load via COPY

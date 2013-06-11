@@ -13,16 +13,11 @@ import org.apache.hadoop.mrunit.mapreduce.ReduceDriver;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * See the <a
- * href="https://cwiki.apache.org/confluence/display/MRUNIT/Index">MRUnit
- * Wiki</a> for more information.
- */
 public class PostalCodesPaidAmountTaxTest {
 	MapReduceDriver<LongWritable, Text, IntWritable, Text, NullWritable, Text> mapReduceDriver;
 	MapDriver<LongWritable, Text, IntWritable, Text> mapDriver;
 	ReduceDriver<IntWritable, Text, NullWritable, Text> reduceDriver;
-/*
+
 	@Before
 	public void setUp() {
 		PostalCodesMapper mapper = new PostalCodesMapper();
@@ -39,29 +34,29 @@ public class PostalCodesPaidAmountTaxTest {
 	@Test
 	public void testMapper() {
 		mapDriver.withInput(new LongWritable(1), new Text("7149696583	16877852	52	2010-10-04 21:41:54	2010-10-08 05:51:03			CreditCard	149.45425	2173.88000	1	0.00000	BOGO-PDX	0.50000	N	N	N			26 KITTYHAWK			PENGILLY	MN	55770	USA	(676)090-4274	Mark Spivey	Mark.Spivey@tivocommunity.com	OS53372-931651-04-77852	http://myretailsite.emc.com/product_detail/Lawn_&_Patio/?"));
-		mapDriver.withOutput(new IntWritable(55770), new Text("p:149.45425,t:2173.88000"));
+		mapDriver.withOutput(new IntWritable(55770), new Text("149.45425,2173.88000"));
 		mapDriver.runTest();
 	}
 
 	@Test
 	public void testReducer() {
 		List<Text> values = new ArrayList<Text>();
-		values.add(new Text("p:149.45425,t:2173.88000"));
-		values.add(new Text("p:149.45425,t:2173.88000"));
-		values.add(new Text("p:149.45425,t:2173.88000"));
+		values.add(new Text("149.45425,2173.88000"));
+		values.add(new Text("149.45425,2173.88000"));
+		values.add(new Text("149.45425,2173.88000"));
 
 		reduceDriver.withInput(new IntWritable(55770), values);
-		reduceDriver.withOutput(null, new Text("55770	6521.64	448.36275"));
+		reduceDriver.withOutput(NullWritable.get(), new Text("55770	6521.64	448.36275"));
 		reduceDriver.runTest();
 	}
 
 	@Test
 	public void testMapReduce() {
-		mapReduceDriver.withInput(new LongWritable(1), new Text("cat cat dog"));
-		mapReduceDriver.addOutput(new Text("cat"), new LongWritable(2));
-		mapReduceDriver.addOutput(new Text("dog"), new LongWritable(1));
+		mapReduceDriver.withInput(new LongWritable(1), new Text("7149696583	16877852	52	2010-10-04 21:41:54	2010-10-08 05:51:03			CreditCard	149.45425	2173.88000	1	0.00000	BOGO-PDX	0.50000	N	N	N			26 KITTYHAWK			PENGILLY	MN	55770	USA	(676)090-4274	Mark Spivey	Mark.Spivey@tivocommunity.com	OS53372-931651-04-77852	http://myretailsite.emc.com/product_detail/Lawn_&_Patio/?"));
+		mapReduceDriver.withInput(new LongWritable(2), new Text("7149696583	16877852	52	2010-10-04 21:41:54	2010-10-08 05:51:03			CreditCard	149.45425	2173.88000	1	0.00000	BOGO-PDX	0.50000	N	N	N			26 KITTYHAWK			PENGILLY	MN	55770	USA	(676)090-4274	Mark Spivey	Mark.Spivey@tivocommunity.com	OS53372-931651-04-77852	http://myretailsite.emc.com/product_detail/Lawn_&_Patio/?"));
+		mapReduceDriver.withInput(new LongWritable(3), new Text("7149696583	16877852	52	2010-10-04 21:41:54	2010-10-08 05:51:03			CreditCard	149.45425	2173.88000	1	0.00000	BOGO-PDX	0.50000	N	N	N			26 KITTYHAWK			PENGILLY	MN	55770	USA	(676)090-4274	Mark Spivey	Mark.Spivey@tivocommunity.com	OS53372-931651-04-77852	http://myretailsite.emc.com/product_detail/Lawn_&_Patio/?"));
+		mapReduceDriver.withOutput(NullWritable.get(), new Text("55770	6521.64	448.36275"));
+		
 		mapReduceDriver.runTest();
 	}
-
-*/
 }

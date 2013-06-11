@@ -10,8 +10,13 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 public class PostalCodesReducer extends
 		Reducer<IntWritable, Text, NullWritable, Text> {
-
-	static TreeMap<Double, Text> recordRepo = new TreeMap<Double, Text>();
+	TreeMap<Double, Text> recordRepo;
+	
+	@Override
+	protected void setup(org.apache.hadoop.mapreduce.Reducer<IntWritable,Text,NullWritable,Text>.Context context) throws IOException ,InterruptedException {
+		recordRepo = new TreeMap<Double, Text>();
+	};
+	
 
 	@Override
 	protected void reduce(IntWritable key, Iterable<Text> counts,
@@ -27,12 +32,10 @@ public class PostalCodesReducer extends
 			StringBuffer paid_amount = new StringBuffer(rawTokens[1]);
 
 			total_paid_amount = total_paid_amount
-					+ Double.parseDouble(paid_amount.substring(paid_amount
-							.indexOf("p:") + 2));
+					+ Double.parseDouble(paid_amount.toString());
 
 			total_tax_amount = total_tax_amount
-					+ Double.parseDouble(tax_amount.substring(tax_amount
-							.indexOf("t:") + 2));
+					+ Double.parseDouble(tax_amount.toString());
 
 		}
 

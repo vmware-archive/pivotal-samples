@@ -13,7 +13,7 @@ import org.apache.hadoop.util.ToolRunner;
 
 public class PostalCodesPaidAmountTaxDriver extends Configured implements Tool {
 
-		public int run(String[] args) throws Exception {
+	public int run(String[] args) throws Exception {
 
 		Job job = new Job(getConf());
 		job.setJarByClass(PostalCodesPaidAmountTaxDriver.class);
@@ -33,7 +33,7 @@ public class PostalCodesPaidAmountTaxDriver extends Configured implements Tool {
 
 		job.setOutputKeyClass(NullWritable.class);
 		job.setOutputValueClass(Text.class);
-		// job.setNumReduceTasks(1);
+		job.setNumReduceTasks(1);
 		job.waitForCompletion(true);
 		return 0;
 
@@ -45,7 +45,8 @@ public class PostalCodesPaidAmountTaxDriver extends Configured implements Tool {
 					+ "<in> <out>");
 			System.exit(2);
 		}
-		int exitCode = ToolRunner.run(new PostalCodesPaidAmountTaxDriver(), args);
+		int exitCode = ToolRunner.run(new PostalCodesPaidAmountTaxDriver(),
+				args);
 		System.exit(exitCode);
 
 	}
