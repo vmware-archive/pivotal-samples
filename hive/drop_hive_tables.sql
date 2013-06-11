@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS retail_demo.order_lineitems_hive;
+DROP TABLE IF EXISTS retail_demo.orders_hive;
+DROP TABLE IF EXISTS retail_demo.products_dim_hive;
+DROP TABLE IF EXISTS retail_demo.categories_dim_hive;
+DROP TABLE IF EXISTS retail_demo.email_addresses_dim_hive;
+DROP TABLE IF EXISTS retail_demo.date_dim_hive;
+DROP TABLE IF EXISTS retail_demo.customers_dim_hive;
+DROP TABLE IF EXISTS retail_demo.payment_methods_hive;
+DROP TABLE IF EXISTS retail_demo.customer_addresses_dim_hive;
