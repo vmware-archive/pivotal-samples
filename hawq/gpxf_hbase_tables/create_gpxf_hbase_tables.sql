@@ -60,48 +60,11 @@ LOCATION ('gpxf://pivhdsne:50070/order_lineitems?FRAGMENTER=HBaseDataFragmenter'
 FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
 
 
-CREATE EXTERNAL TABLE retail_demo.orders_gpxf
-(
-    order_id TEXT,
-    customer_id TEXT,
-    store_id TEXT,
-    order_datetime TEXT,
-    ship_completion_datetime TEXT,
-    return_datetime TEXT,
-    refund_datetime TEXT,
-    payment_method_code TEXT,
-    total_tax_amount TEXT,
-    total_paid_amount TEXT,
-    total_item_quantity TEXT,
-    total_discount_amount TEXT,
-    coupon_code TEXT,
-    coupon_amount TEXT,
-    order_canceled_flag TEXT,
-    has_returned_items_flag TEXT,
-    has_refunded_items_flag TEXT,
-    fraud_code TEXT,
-    fraud_resolution_code TEXT,
-    billing_address_line1 TEXT,
-    billing_address_line2 TEXT,
-    billing_address_line3 TEXT,
-    billing_address_city TEXT,
-    billing_address_state TEXT,
-    billing_address_postal_code TEXT,
-    billing_address_country TEXT,
-    billing_phone_number TEXT,
-    customer_name TEXT,
-    customer_email_address TEXT,
-    ordering_session_id TEXT,
-    website_url TEXT
-)
-LOCATION ('gpxf://pivhdsne:50070/retail_demo/orders/orders.tsv.gz?Fragmenter=HdfsDataFragmenter')
-FORMAT 'TEXT' (DELIMITER = E'\t');
-
 CREATE EXTERNAL TABLE retail_demo.orders_hbase
 (
-    --order_id TEXT,
+    -- order_id TEXT,
     recordkey integer,
-    "cf1:order_id" TEXT.
+    "cf1:order_id" TEXT,
     "cf1:customer_id" TEXT,
     "cf1:store_id" TEXT,
     "cf1:order_datetime" TEXT,
