@@ -16,7 +16,6 @@ public class PostalCodesReducer extends
 	protected void setup(org.apache.hadoop.mapreduce.Reducer<IntWritable,Text,NullWritable,Text>.Context context) throws IOException ,InterruptedException {
 		recordRepo = new TreeMap<Double, Text>();
 	};
-	
 
 	@Override
 	protected void reduce(IntWritable key, Iterable<Text> counts,
@@ -26,7 +25,6 @@ public class PostalCodesReducer extends
 		double total_paid_amount = 0;
 		Text result = new Text();
 		for (Text val : counts) {
-
 			String[] rawTokens = val.toString().split(",");
 			StringBuffer tax_amount = new StringBuffer(rawTokens[0]);
 			StringBuffer paid_amount = new StringBuffer(rawTokens[1]);
@@ -36,7 +34,6 @@ public class PostalCodesReducer extends
 
 			total_tax_amount = total_tax_amount
 					+ Double.parseDouble(tax_amount.toString());
-
 		}
 
 		temp = new StringBuffer(key.toString());
@@ -51,18 +48,14 @@ public class PostalCodesReducer extends
 		if (recordRepo.size() > 10) {
 			recordRepo.remove(recordRepo.firstKey());
 		}
-
 	}
 
 	@Override
 	protected void cleanup(org.apache.hadoop.mapreduce.Reducer.Context context)
 			throws IOException, InterruptedException {
-
 		for (Text t : recordRepo.descendingMap().values()) {
 			context.write(NullWritable.get(), t);
-
 		}
 		super.cleanup(context);
-
 	}
 }

@@ -61,7 +61,7 @@ my %table_to_col = (
 
 foreach my $table (keys %table_to_col)
 {
-  create_hbase_table($table);
+  #create_hbase_table($table);
   import_to_hbase($table);
 }
 
@@ -75,12 +75,14 @@ sub create_hbase_table {
 
 sub import_to_hbase {
   my $t_name = shift;
-  print "Running the 'importtsv' map/reduce job to load '$t_name' into HBase ...";
+  print "Running the 'importtsv' map/reduce job to load '$t_name' into HBase ...\n";
   my $cols = join(",", map { "cf1:$_" } @{$table_to_col{$t_name}});
   my $cmd = "hadoop jar $HBASE_JAR importtsv -libjars $LIB_JARS";
   $cmd .= " -Dimporttsv.columns=HBASE_ROW_KEY,$cols";
   $cmd .= " $t_name $DATA_DIR/$t_name";
-  print $cmd
-  system $cmd;
+  print "\n-------\n";
+  print $cmd;
+  print "\n";
+#  system $cmd;
 }
 
