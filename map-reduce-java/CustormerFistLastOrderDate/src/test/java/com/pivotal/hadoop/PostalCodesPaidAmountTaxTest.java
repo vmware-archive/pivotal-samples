@@ -55,8 +55,9 @@ public class PostalCodesPaidAmountTaxTest {
 				.withOutput(
 						NullWritable.get(),
 						new Text(
-								"16877852	7149696583	2010-10-01 21:41:54	7149696586	2010-10-03 21:41:54"));
-		reduceDriver.runTest();
+								"16877852	7149696586	2010-10-03 21:41:54	7149696583	2010-10-01 21:41:54"));
+
+						reduceDriver.runTest();
 	}
 
 	@Test
@@ -80,7 +81,7 @@ public class PostalCodesPaidAmountTaxTest {
 				.withOutput(
 						NullWritable.get(),
 						new Text(
-								"16877852	7149696583	2010-10-01 21:41:54	7149696586	2010-10-03 21:41:54"));
+								"16877852	7149696586	2010-10-03 21:41:54	7149696583	2010-10-01 21:41:54"));
 
 		mapReduceDriver.runTest();
 	}
