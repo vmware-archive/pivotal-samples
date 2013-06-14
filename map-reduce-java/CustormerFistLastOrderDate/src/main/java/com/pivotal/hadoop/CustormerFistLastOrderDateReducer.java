@@ -28,56 +28,15 @@ public class CustormerFistLastOrderDateReducer extends
 		}
 		temp = new StringBuffer(key.toString());
 		temp.append("\t");
-
 		temp.append(firstlastOrderDate);
-
 		result.set(temp.toString());
-
 		context.write(NullWritable.get(), result);
 	}
 
-	public static String lastOrderDate(IntWritable key,
-			ArrayList<String> counts, String flag) throws ParseException {
-
-		boolean firstTime = true;
-		String olderDate_Id = null;
-		Date olderDate = null;
-		for (String val : counts) {
-
-			String[] rawTokens = val.toString().split(",");
-			String order_date = rawTokens[1];
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-
-			if (firstTime) {
-				olderDate = sf.parse(order_date);
-				olderDate_Id = val.toString();
-				firstTime = false;
-			} else {
-
-				if (flag.equalsIgnoreCase("first")) {
-					if (olderDate.before(sf.parse(order_date))) {
-						olderDate = sf.parse(order_date);
-						olderDate_Id = val.toString();
-
-					} else {
-						if (flag.equalsIgnoreCase("last")) {
-
-							if (olderDate.after(sf.parse(order_date))) {
-								olderDate = sf.parse(order_date);
-								olderDate_Id = val.toString();
-							}
-
-						}
-					}
-				}
-			}
-		}
-		return olderDate_Id.replaceAll(",", "\t");
-	}
+	
 
 	public static String lastOrderDate(IntWritable key, Iterable<Text> counts)
 			throws ParseException {
-
 		boolean firstTime = true;
 		String olderDate_Id = null;
 		Date olderDate = null;
@@ -107,7 +66,7 @@ public class CustormerFistLastOrderDateReducer extends
 		}
 		String valDate = olderDate_Id.replaceAll(",", "\t") + "\t"
 				+ lastDate_Id.replaceAll(",", "\t");
-		System.err.println(valDate);
+		
 		return valDate;
 	}
 
