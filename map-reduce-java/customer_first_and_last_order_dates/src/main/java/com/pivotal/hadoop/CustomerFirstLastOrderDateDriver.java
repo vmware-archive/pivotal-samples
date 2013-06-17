@@ -41,7 +41,7 @@ public class CustomerFirstLastOrderDateDriver extends Configured implements
 
 	public static void main(String[] args) throws Exception {
 		if (args.length < 2) {
-			System.err.println("Usage: " + "PostalCodesPaidAmountTaxDriver"
+			System.err.println("Usage: " + "CustomerFirstLastOrderDateDriver"
 					+ "<in> <out>");
 			System.exit(2);
 		}

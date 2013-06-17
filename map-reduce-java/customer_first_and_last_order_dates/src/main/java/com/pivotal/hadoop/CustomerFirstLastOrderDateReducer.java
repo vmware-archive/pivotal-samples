@@ -3,7 +3,6 @@ package com.pivotal.hadoop;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import org.apache.hadoop.io.IntWritable;
