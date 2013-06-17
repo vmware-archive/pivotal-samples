@@ -7,7 +7,7 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class CustormerFistLastOrderDateMapper extends
+public class CustomerFirstLastOrderDateMapper extends
 		Mapper<LongWritable, Text, IntWritable, Text> {
 	IntWritable key = new IntWritable();
 	Text val = new Text();

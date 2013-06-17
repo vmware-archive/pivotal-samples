@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Built-By: gpadmin
-Build-Jdk: 1.6.0_39
-Created-By: Maven Integration for Eclipse
-

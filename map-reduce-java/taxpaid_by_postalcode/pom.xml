@@ -2,12 +2,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>PostalCodes-PaidAmount-Tax</groupId>
-  <artifactId>PostalCodes-PaidAmount-Tax</artifactId>
+  <groupId>taxpaid_by_postalcode</groupId>
+  <artifactId>taxpaid_by_postalcode</artifactId>
   <version>1.0</version>
   <packaging>jar</packaging>
 
-  <name>wpmcn.hadoop</name>
+  <name>taxpaid_by_postalcode</name>
   <url>http://maven.apache.org</url>
 
   <properties>

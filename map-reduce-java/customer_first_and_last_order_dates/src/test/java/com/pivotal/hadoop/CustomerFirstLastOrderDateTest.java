@@ -13,15 +13,15 @@ import org.apache.hadoop.mrunit.mapreduce.ReduceDriver;
 import org.junit.Before;
 import org.junit.Test;
 
-public class PostalCodesPaidAmountTaxTest {
+public class CustomerFirstLastOrderDateTest {
 	MapReduceDriver<LongWritable, Text, IntWritable, Text, NullWritable, Text> mapReduceDriver;
 	MapDriver<LongWritable, Text, IntWritable, Text> mapDriver;
 	ReduceDriver<IntWritable, Text, NullWritable, Text> reduceDriver;
 
 	@Before
 	public void setUp() {
-		CustormerFistLastOrderDateMapper mapper = new CustormerFistLastOrderDateMapper();
-		CustormerFistLastOrderDateReducer reducer = new CustormerFistLastOrderDateReducer();
+		CustomerFirstLastOrderDateMapper mapper = new CustomerFirstLastOrderDateMapper();
+		CustomerFirstLastOrderDateReducer reducer = new CustomerFirstLastOrderDateReducer();
 		mapDriver = new MapDriver<LongWritable, Text, IntWritable, Text>();
 		mapDriver.setMapper(mapper);
 		reduceDriver = new ReduceDriver<IntWritable, Text, NullWritable, Text>();

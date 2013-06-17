@@ -11,7 +11,7 @@ import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-public class CustormerFistLastOrderDateReducer extends
+public class CustomerFirstLastOrderDateReducer extends
 		Reducer<IntWritable, Text, NullWritable, Text> {
 
 	@Override
