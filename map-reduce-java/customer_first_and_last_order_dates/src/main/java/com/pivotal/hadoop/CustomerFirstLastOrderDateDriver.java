@@ -42,7 +42,7 @@ public class CustomerFirstLastOrderDateDriver extends Configured implements
 	public static void main(String[] args) throws Exception {
 		if (args.length < 2) {
 			System.err.println("Usage: " + "CustomerFirstLastOrderDateDriver"
-					+ "<in> <out>");
+					+ "<input> <output>");
 			System.exit(2);
 		}
 		int exitCode = ToolRunner.run(new CustomerFirstLastOrderDateDriver(),
