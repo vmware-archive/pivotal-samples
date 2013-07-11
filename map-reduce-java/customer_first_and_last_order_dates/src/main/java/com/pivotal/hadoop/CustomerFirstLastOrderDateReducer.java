@@ -52,11 +52,11 @@ public class CustomerFirstLastOrderDateReducer extends
 				lastDate_Id = val.toString();
 				firstTime = false;
 			} else {
-				if (olderDate.before(sf.parse(order_date))) {
+				if (olderDate.after(sf.parse(order_date))) {
 					olderDate = sf.parse(order_date);
 					olderDate_Id = val.toString();
 				} else {
-					if (lastDate.after(sf.parse(order_date))) {
+					if (lastDate.before(sf.parse(order_date))) {
 						lastDate = sf.parse(order_date);
 						lastDate_Id = val.toString();
 					}
@@ -68,5 +68,8 @@ public class CustomerFirstLastOrderDateReducer extends
 		
 		return valDate;
 	}
+
+
+
 
 }
