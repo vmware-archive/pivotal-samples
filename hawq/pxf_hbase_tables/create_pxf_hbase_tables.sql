@@ -4,8 +4,8 @@ CREATE EXTERNAL TABLE retail_demo.categories_dim_hbase
     recordkey integer,
     "cf1:category_name" character(400)
 )
-LOCATION ('gpxf://pivhdsne:50070/categories_dim?FRAGMENTER=HBaseDataFragmenter')
-FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+LOCATION ('pxf://pivhdsne:50070/categories_dim?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
+FORMAT 'CUSTOM' (formatter='pxfwritable_import');
 
 
 CREATE EXTERNAL TABLE retail_demo.customers_dim_hbase
@@ -16,8 +16,8 @@ CREATE EXTERNAL TABLE retail_demo.customers_dim_hbase
     "cf1:last_name" TEXT,
     "cf1:gender" character(1)
 )
-LOCATION ('gpxf://pivhdsne:50070/customers_dim?FRAGMENTER=HBaseDataFragmenter')
-FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+LOCATION ('pxf://pivhdsne:50070/customers_dim?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
+FORMAT 'CUSTOM' (formatter='pxfwritable_import');
 
 
 CREATE  EXTERNAL TABLE retail_demo.order_lineitems_hbase
@@ -56,8 +56,8 @@ CREATE  EXTERNAL TABLE retail_demo.order_lineitems_hbase
     "cf1:ordering_session_id" TEXT,
     "cf1:website_url" TEXT
 )
-LOCATION ('gpxf://pivhdsne:50070/order_lineitems?FRAGMENTER=HBaseDataFragmenter')
-FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+LOCATION ('pxf://pivhdsne:50070/order_lineitems?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
+FORMAT 'CUSTOM' (formatter='pxfwritable_import');
 
 
 CREATE EXTERNAL TABLE retail_demo.orders_hbase
@@ -96,8 +96,8 @@ CREATE EXTERNAL TABLE retail_demo.orders_hbase
     "cf1:ordering_session_id" TEXT,
     "cf1:website_url" TEXT
 )
-LOCATION ('gpxf://pivhdsne:50070/orders?FRAGMENTER=HBaseDataFragmenter')
-FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+LOCATION ('pxf://pivhdsne:50070/orders?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
+FORMAT 'CUSTOM' (formatter='pxfwritable_import');
 
 
 CREATE EXTERNAL TABLE retail_demo.customer_addresses_dim_hbase
@@ -118,8 +118,8 @@ CREATE EXTERNAL TABLE retail_demo.customer_addresses_dim_hbase
     "cf1:country" TEXT,
     "cf1:phone_number" TEXT
 )
-LOCATION ('gpxf://pivhdsne:50070/customer_addresses_dim?FRAGMENTER=HBaseDataFragmenter')
-FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+LOCATION ('pxf://pivhdsne:50070/customer_addresses_dim?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
+FORMAT 'CUSTOM' (formatter='pxfwritable_import');
 
 
 CREATE EXTERNAL TABLE retail_demo.date_dim_hbase
@@ -132,8 +132,8 @@ CREATE EXTERNAL TABLE retail_demo.date_dim_hbase
     "cf1:reporting_week" integer,
     "cf1:reporting_dow" integer
 )
-LOCATION ('gpxf://pivhdsne:50070/date_dim?FRAGMENTER=HBaseDataFragmenter')
-FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+LOCATION ('pxf://pivhdsne:50070/date_dim?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
+FORMAT 'CUSTOM' (formatter='pxfwritable_import');
 
 CREATE EXTERNAL TABLE retail_demo.email_addresses_dim_hbase
 (
@@ -141,8 +141,8 @@ CREATE EXTERNAL TABLE retail_demo.email_addresses_dim_hbase
     recordkey integer,
     "cf1:email_address" TEXT
 )
-LOCATION ('gpxf://pivhdsne:50070/email_addresses_dim?FRAGMENTER=HBaseDataFragmenter')
-FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+LOCATION ('pxf://pivhdsne:50070/email_addresses_dim?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
+FORMAT 'CUSTOM' (formatter='pxfwritable_import');
 
 
 CREATE EXTERNAL TABLE retail_demo.payment_methods_hbase
@@ -151,8 +151,8 @@ CREATE EXTERNAL TABLE retail_demo.payment_methods_hbase
     recordkey integer,
     "cf1:payment_method_code" character(20)
 )
-LOCATION ('gpxf://pivhdsne:50070/payment_methods?FRAGMENTER=HBaseDataFragmenter')
-FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+LOCATION ('pxf://pivhdsne:50070/payment_methods?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
+FORMAT 'CUSTOM' (formatter='pxfwritable_import');
 
 CREATE EXTERNAL TABLE retail_demo.products_dim_hbase
 (
@@ -163,7 +163,7 @@ CREATE EXTERNAL TABLE retail_demo.products_dim_hbase
     "cf1:price" TEXT,
     "cf1:product_name" TEXT
 )
-LOCATION ('gpxf://pivhdsne:50070/products_dim?FRAGMENTER=HBaseDataFragmenter')
-FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+LOCATION ('pxf://pivhdsne:50070/products_dim?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
+FORMAT 'CUSTOM' (formatter='pxfwritable_import');
 
 
