@@ -1,3 +1,4 @@
+CREATE DATABASE IF NOT EXISTS retail_demo;
 CREATE TABLE retail_demo.order_lineitems_hive
 (
   Order_ID                      string
