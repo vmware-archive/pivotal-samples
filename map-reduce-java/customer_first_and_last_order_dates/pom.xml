@@ -81,59 +81,6 @@
             <version>1.0.1.RC1-phd1</version>
         </dependency>
         <dependency>
-<<<<<<< HEAD
-=======
-            <groupId>gphd</groupId>
-            <artifactId>gphd-auth</artifactId>
-            <version>2.0.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>gphd</groupId>
-            <artifactId>gphd-hdfs</artifactId>
-            <version>2.0.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>gphd</groupId>
-            <artifactId>gphd-common</artifactId>
-            <version>2.0.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>gphd</groupId>
-            <artifactId>gphd-client-common</artifactId>
-            <version>2.0.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>gphd</groupId>
-            <artifactId>gphd-client-core</artifactId>
-            <version>2.0.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>gphd</groupId>
-            <artifactId>gphd-client-jobclient</artifactId>
-            <version>2.0.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>gphd</groupId>
-            <artifactId>gphd-examples</artifactId>
-            <version>2.0.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>gphd</groupId>
-            <artifactId>gphd-yarn-api</artifactId>
-            <version>2.0.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>gphd</groupId>
-            <artifactId>gphd-yarn-client</artifactId>
-            <version>2.0.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>gphd</groupId>
-            <artifactId>gphd-yarn-common</artifactId>
-            <version>2.0.1.0</version>
-        </dependency>
-        <dependency>
->>>>>>> 63fa631aa30b9ddb5e3da25104fd86c32f46a248
             <groupId>com.google.guava</groupId>
             <artifactId>guava-testlib</artifactId>
             <version>11.0.2</version>
