@@ -1,7 +1,5 @@
-DROP SCHEMA IF EXISTS retail_demo CASCADE;
-CREATE SCHEMA retail_demo;
-
--- 1. HAWQ table; load via COPY
+-- 1. HAWQ table
+DROP TABLE IF EXISTS retail_demo.categories_dim_hawq;
 CREATE TABLE retail_demo.categories_dim_hawq
 (
     category_id integer NOT NULL,
@@ -9,7 +7,8 @@ CREATE TABLE retail_demo.categories_dim_hawq
 )
 WITH (appendonly=true, compresstype=quicklz) DISTRIBUTED RANDOMLY;
 
--- 2.  HAWQ table; load via COPY
+-- 2. HAWQ table
+DROP TABLE IF EXISTS retail_demo.customers_dim_hawq;
 CREATE TABLE retail_demo.customers_dim_hawq
 (
     customer_id TEXT,
@@ -19,7 +18,8 @@ CREATE TABLE retail_demo.customers_dim_hawq
 )
 WITH (appendonly=true, compresstype=quicklz) DISTRIBUTED RANDOMLY;
 
--- 3. HAWQ table; load via COPY
+-- 3. HAWQ table
+DROP TABLE IF EXISTS retail_demo.order_lineitems_hawq;
 CREATE  TABLE retail_demo.order_lineitems_hawq
 (
     order_id TEXT,
@@ -57,7 +57,8 @@ CREATE  TABLE retail_demo.order_lineitems_hawq
 )
 WITH (appendonly=true, compresstype=quicklz) DISTRIBUTED RANDOMLY;
 
--- 4. HAWQ table; load via COPY
+-- 4. HAWQ table
+DROP TABLE IF EXISTS retail_demo.orders_hawq;
 CREATE TABLE retail_demo.orders_hawq
 (
     order_id TEXT,
@@ -94,7 +95,8 @@ CREATE TABLE retail_demo.orders_hawq
 )
 WITH (appendonly=true, compresstype=quicklz) DISTRIBUTED RANDOMLY;
 
--- 5.  HAWQ table; load via COPY
+-- 5. HAWQ table
+DROP TABLE IF EXISTS retail_demo.customer_addresses_dim_hawq;
 CREATE TABLE retail_demo.customer_addresses_dim_hawq
 (
     customer_address_id TEXT,
@@ -113,7 +115,8 @@ CREATE TABLE retail_demo.customer_addresses_dim_hawq
 )
 WITH (appendonly=true, compresstype=quicklz) DISTRIBUTED RANDOMLY;
 
--- 6. HAWQ table; load via COPY
+-- 6. HAWQ table
+DROP TABLE IF EXISTS retail_demo.date_dim_hawq;
 CREATE TABLE retail_demo.date_dim_hawq
 (
     calendar_day date,
@@ -126,6 +129,7 @@ CREATE TABLE retail_demo.date_dim_hawq
 WITH (appendonly=true) DISTRIBUTED RANDOMLY;
 
 -- 7. HAWQ table
+DROP TABLE IF EXISTS retail_demo.email_addresses_dim_hawq;
 CREATE TABLE retail_demo.email_addresses_dim_hawq
 (
     customer_id TEXT,
@@ -134,16 +138,17 @@ CREATE TABLE retail_demo.email_addresses_dim_hawq
 WITH (appendonly=true, compresstype=quicklz) DISTRIBUTED RANDOMLY;
 
 
--- 8. HAWQ table; load via COPY
+-- 8. HAWQ table
+DROP TABLE IF EXISTS retail_demo.payment_methods_hawq;
 CREATE TABLE retail_demo.payment_methods_hawq
 (
     payment_method_id smallint,
     payment_method_code character varying(20)
 )
 WITH (appendonly=true, compresstype=quicklz) DISTRIBUTED RANDOMLY;
-ALTER TABLE retail_demo.payment_methods_hawq OWNER TO gpadmin;
 
--- 9.  HAWQ table; load via COPY
+-- 9. HAWQ table
+DROP TABLE IF EXISTS retail_demo.products_dim_hawq;
 CREATE TABLE retail_demo.products_dim_hawq
 (
     product_id TEXT,
