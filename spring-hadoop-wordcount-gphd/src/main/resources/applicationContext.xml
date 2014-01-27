@@ -9,13 +9,15 @@
 	<context:property-placeholder location="hadoop.properties" />
 
 	<configuration >
-		fs.default.name=${hd.fs}
+		fs.defaultFS=${hd.fs}
+		yarn.resourcemanager.address=${hd.rm}
+		mapreduce.framework.name=yarn
 	</configuration>
 
 	<job id="wordcountJob" 
 		input-path="${wordcount.input.path}"
 		output-path="${wordcount.output.path}"
-		libs="${LIB_DIR}/spring-hadoop-wordcount-gphd-0.0.1.jar"
+		libs="file:${app.repo}/spring-hadoop-wordcount-gphd-0.0.1.jar"
 		mapper="com.pivotal.springhadoop.wordcount.WordCount.TokenizerMapper"
 		reducer="com.pivotal.springhadoop.wordcount.WordCount.IntSumReducer" 
 		/>
