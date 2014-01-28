@@ -9,7 +9,6 @@
 
 	<name>spring-hadoop-wordcount</name>
 
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -21,8 +20,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -31,6 +30,7 @@
 				<version>1.2.2</version>
 				<configuration>
 					<repositoryLayout>flat</repositoryLayout>
+					<extraJvmArguments>-DLIB_DIR=file:${project.build.directory}</extraJvmArguments>
 					<programs>
 						<program>
 							<mainClass>com.pivotal.springhadoop.wordcount.WordCount</mainClass>
@@ -41,43 +41,33 @@
 			</plugin>
 		</plugins>
 	</build>
+
 	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-all</artifactId>
-			<version>1.1</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.hadoop</groupId>
-			<artifactId>hadoop-client</artifactId>
-			<version>2.0.3-alpha</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-hadoop</artifactId>
-			<version>1.0.1.RC1</version>
+			<version>1.0.2.RELEASE-hadoop22</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context-support</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>3.2.1.RELEASE</version>
+			<version>3.2.6.RELEASE</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>3.2.1.RELEASE</version>
-		</dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-mapreduce-client-jobclient</artifactId>
+			<version>2.2.0</version>
+			<scope>runtime</scope>
 
+		</dependency>
 		<dependency>
 			<groupId>org.apache.mrunit</groupId>
 			<artifactId>mrunit</artifactId>
