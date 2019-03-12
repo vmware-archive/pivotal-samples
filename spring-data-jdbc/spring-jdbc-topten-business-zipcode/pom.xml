@@ -8,7 +8,7 @@
   <packaging>jar</packaging>
 
   <name>spring-jdbc-topten-business-zipcode</name>
-  <url>http://maven.apache.org</url>
+  <url>https://maven.apache.org</url>
 
 <properties>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>

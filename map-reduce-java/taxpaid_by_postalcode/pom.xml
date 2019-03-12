@@ -8,7 +8,7 @@
   <packaging>jar</packaging>
 
   <name>taxpaid_by_postalcode</name>
-  <url>http://maven.apache.org</url>
+  <url>https://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,7 +17,7 @@
         <repository>
             <id>org.springsource.maven.milestone</id>
             <name>SpringSource Maven Milestone Repository</name>
-            <url>http://repo.springsource.org/libs-milestone</url>
+            <url>https://repo.springsource.org/libs-milestone</url>
         </repository>
     </repositories>
     <dependencies>
