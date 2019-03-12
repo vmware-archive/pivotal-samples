@@ -17,7 +17,7 @@
         <repository>
             <id>spring-releases</id>
             <name>SpringSource Releases</name>
-            <url>http://repo.spring.io/libs-release</url>
+            <url>https://repo.spring.io/libs-release</url>
         </repository>
     </repositories>
 
