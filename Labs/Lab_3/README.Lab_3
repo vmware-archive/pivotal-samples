@@ -34,7 +34,7 @@ demo=# \dv retail_demo.*
 
     - Review that script
     - Run it: ./HBase_Import_Retail_Demo.pl
-    - Reference on the import process: http://hbase.apache.org/book/ops_mgt.html#importtsv
+    - Reference on the import process: https://hbase.apache.org/book/ops_mgt.html#importtsv
     - Verify we can see some data:
       * Fire up the HBase shell: hbase shell
       * Scan some rows: hbase(main):003:0> scan 'products_dim', { LIMIT => 5 }
