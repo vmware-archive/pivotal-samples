@@ -7,7 +7,7 @@
     <version>1.0</version>
     <packaging>jar</packaging>
     <name>customer_first_and_last_order_dates</name>
-    <url>http://maven.apache.org</url>
+    <url>https://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -28,7 +28,7 @@
         <repository>
             <id>org.springsource.maven.milestone</id>
             <name>SpringSource Maven Milestone Repository</name>
-            <url>http://repo.springsource.org/libs-milestone</url>
+            <url>https://repo.springsource.org/libs-milestone</url>
         </repository>
     </repositories>
     <dependencies>
